@@ -22,8 +22,19 @@
             
             let queues = new Set();
             for(const query of a.split("\n")){
-                queues = queues.union(new Set([...pieces(query)].map(q=>normalizedSort(q[0]+q[1])+q.substring(2))));
+                for(const queue of pieces(query)){
+                    if(queue.length > 9) continue;
+                    const bag1 = normalizedSort(queue.substring(0,2));
+                    const bag2 = queue.substring(2);
+                    if(bag2.length == 7){
+                        queues.add(bag1+bag2);
+                    }
+                    for(const remaining of pieces(`[^${bag2}]!`)){
+                        queues.add(bag1+bag2+remaining)
+                    }
+                }
             }
+            
             queues=[...queues];
             
             let setups = new Set(LOOKUP[queues[0]]);
