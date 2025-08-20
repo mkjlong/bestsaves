@@ -8,7 +8,7 @@
     <script src="lookuppieces.js" defer></script>
 </head>
 <body>
-    <p id="text" contenteditable id = "text" style="max-width: 200px; resize:none; overflow: hidden; min-height: 20px; border:2px solid black;font-family: Arial, Helvetica, sans-serif;"></p>
+    <p id="text" contenteditable id = "text" style="max-width: 200px; resize:none; overflow: hidden; min-height: 20px; border:2px solid black;font-family: Consolas, 'Courier New', monospace"></p>
     <input type="submit" value="submit" id="submit">
     <br>
     <div id = container style="display: grid;gap:10px;grid:auto-flow / repeat(auto-fill, 200px);padding:20px;margin-top: 10px;">
@@ -44,9 +44,7 @@
             }
             
             for(const setup of setups){
-                const field = Number(setup);
-                const fieldString = field.toString(2).padStart(40,"0").match(/.{1,10}/g).map(s=>s.split("").reverse().join("")).join("\n").replaceAll("0","_").replaceAll("1","G");
-                const minoBoard = new MinoBoard(fieldString)
+                const minoBoard = new MinoBoard(setup)
                 
                 document.getElementById("container").append(minoBoard)
             }
