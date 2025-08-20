@@ -21,7 +21,7 @@
             document.getElementById("container").innerHTML = ""
             
             let queues = new Set();
-            for(const query of a.split("\n")){
+            for(const query of a.split("\n").filter(x=>x.trim())){
                 for(const queue of pieces(query)){
                     if(queue.length > 9) continue;
                     const bag1 = normalizedSort(queue.substring(0,2));
