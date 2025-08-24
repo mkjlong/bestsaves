@@ -2,12 +2,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5th PC bestsaves field lookup</title>
+    <title>5th PC bestsaves lookup</title>
     <script src="LOOKUP.js" defer></script>
     <script src="mino-board.js" defer></script>
     <script src="lookuppieces.js" defer></script>
 </head>
 <body>
+    <p id="instructions">
+        <button id = hide>hide instructions forever</button>
+        <br>
+        Input the first two bags (9 pieces) of a valid 5th queue, one per line. 
+        <br>
+        You can also specify multiple queues using sfinder notation.
+        <br>
+        Outputs all setups that are bestsaves for all inputted queues.
+    </p>
     <p id="text" contenteditable id = "text" style="max-width: 200px; resize:none; overflow: hidden; min-height: 20px; border:2px solid black;font-family: Consolas, 'Courier New', monospace"></p>
     <input type="submit" value="submit" id="submit">
     <br>
@@ -15,6 +24,15 @@
 
     </div>
     <script type="module" defer>
+        if(localStorage.getItem("hideInstructions")){
+            document.getElementById("instructions").style.display = "none";
+        }
+
+        document.getElementById("hide").addEventListener("click",function(){
+            localStorage.setItem("hideInstructions","true");
+            document.getElementById("instructions").style.display = "none";
+        })
+
         document.getElementById("submit").addEventListener("click",function(){
             const a = document.getElementById("text").innerText;
             //console.log(LOOKUP[a]);
@@ -44,9 +62,14 @@
             }
             
             for(const setup of setups){
+                const a = document.createElement("a");
+                a.href = `./setup-info.html?s=${setup}`;
+
                 const minoBoard = new MinoBoard(setup)
+
+                a.append(minoBoard);
                 
-                document.getElementById("container").append(minoBoard)
+                document.getElementById("container").append(a)
             }
             
         })
